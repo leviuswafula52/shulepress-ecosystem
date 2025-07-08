@@ -14,16 +14,143 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      course_applications: {
+        Row: {
+          applied_at: string
+          course_id: string
+          id: string
+          status: string
+          student_id: string
+          updated_at: string
+        }
+        Insert: {
+          applied_at?: string
+          course_id: string
+          id?: string
+          status?: string
+          student_id: string
+          updated_at?: string
+        }
+        Update: {
+          applied_at?: string
+          course_id?: string
+          id?: string
+          status?: string
+          student_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_applications_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      courses: {
+        Row: {
+          availability: boolean
+          created_at: string
+          description: string | null
+          duration: string | null
+          id: string
+          max_students: number | null
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          availability?: boolean
+          created_at?: string
+          description?: string | null
+          duration?: string | null
+          id?: string
+          max_students?: number | null
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          availability?: boolean
+          created_at?: string
+          description?: string | null
+          duration?: string | null
+          id?: string
+          max_students?: number | null
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          first_name: string | null
+          id: string
+          last_name: string | null
+          phone: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _user_id: string
+          _role: Database["public"]["Enums"]["app_role"]
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "student" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +277,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["student", "admin"],
+    },
   },
 } as const
